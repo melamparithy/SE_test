@@ -1,4 +1,4 @@
-```java
+
 public class TennisGame1 implements TennisGame {
 
     private static final int MAX_SCORE = 4;
@@ -15,21 +15,33 @@ public class TennisGame1 implements TennisGame {
     }
 
     public void wonPoint(String playerName) {
-        if (playerName.equals(player1Name)) {
+        if (isPlayer1(playerName)) {
             player1Score++;
         } else {
             player2Score++;
         }
     }
 
+    private boolean isPlayer1(String playerName) {
+        return playerName.equals(player1Name);
+    }
+
     public String getScore() {
-        if (player1Score == player2Score) {
+        if (isEqualScore()) {
             return getEqualScore();
-        } else if (player1Score >= MAX_SCORE || player2Score >= MAX_SCORE) {
+        } else if (isGameFinished()) {
             return getWinningScore();
         } else {
             return getRegularScore();
         }
+    }
+
+    private boolean isEqualScore() {
+        return player1Score == player2Score;
+    }
+
+    private boolean isGameFinished() {
+        return player1Score >= MAX_SCORE || player2Score >= MAX_SCORE;
     }
 
     private String getEqualScore() {
@@ -55,4 +67,3 @@ public class TennisGame1 implements TennisGame {
         return SCORE_NAMES[player1Score] + "-" + SCORE_NAMES[player2Score];
     }
 }
-```
