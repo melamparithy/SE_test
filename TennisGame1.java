@@ -1,6 +1,9 @@
 ```java
 public class TennisGame1 implements TennisGame {
 
+    private static final int MAX_SCORE = 4;
+    private static final String[] SCORE_NAMES = {"Love", "Fifteen", "Thirty", "Forty"};
+
     private int player1Score = 0;
     private int player2Score = 0;
     private String player1Name;
@@ -20,46 +23,36 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
         if (player1Score == player2Score) {
-            score = getEqualScore();
-        } else if (player1Score >= 4 || player2Score >= 4) {
-            score = getWinningScore();
+            return getEqualScore();
+        } else if (player1Score >= MAX_SCORE || player2Score >= MAX_SCORE) {
+            return getWinningScore();
         } else {
-            score = getRegularScore();
+            return getRegularScore();
         }
-        return score;
     }
 
     private String getEqualScore() {
-        switch (player1Score) {
-            case 0:
-                return "Love-All";
-            case 1:
-                return "Fifteen-All";
-            case 2:
-                return "Thirty-All";
-            default:
-                return "Deuce";
+        if (player1Score < 3) {
+            return SCORE_NAMES[player1Score] + "-All";
+        } else {
+            return "Deuce";
         }
     }
 
     private String getWinningScore() {
         int scoreDifference = player1Score - player2Score;
-        if (scoreDifference == 1) {
-            return "Advantage " + player1Name;
-        } else if (scoreDifference == -1) {
-            return "Advantage " + player2Name;
-        } else if (scoreDifference >= 2) {
-            return "Win for " + player1Name;
+        if (Math.abs(scoreDifference) == 1) {
+            String leadingPlayer = (scoreDifference == 1) ? player1Name : player2Name;
+            return "Advantage " + leadingPlayer;
         } else {
-            return "Win for " + player2Name;
+            String winningPlayer = (scoreDifference >= 2) ? player1Name : player2Name;
+            return "Win for " + winningPlayer;
         }
     }
 
     private String getRegularScore() {
-        String[] scoreNames = {"Love", "Fifteen", "Thirty", "Forty"};
-        return scoreNames[player1Score] + "-" + scoreNames[player2Score];
+        return SCORE_NAMES[player1Score] + "-" + SCORE_NAMES[player2Score];
     }
 }
 ```
