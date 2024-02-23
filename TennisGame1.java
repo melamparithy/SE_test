@@ -1,5 +1,4 @@
-
-public class TennisGame1 implements TennisGame {
+ic class TennisGame1 implements TennisGame {
 
     private static final int MAX_SCORE = 4;
     private static final String[] SCORE_NAMES = {"Love", "Fifteen", "Thirty", "Forty"};
@@ -14,6 +13,7 @@ public class TennisGame1 implements TennisGame {
         this.player2Name = player2Name;
     }
 
+    @Override
     public void wonPoint(String playerName) {
         if (isPlayer1(playerName)) {
             player1Score++;
@@ -26,6 +26,7 @@ public class TennisGame1 implements TennisGame {
         return playerName.equals(player1Name);
     }
 
+    @Override
     public String getScore() {
         if (isEqualScore()) {
             return getEqualScore();
@@ -54,11 +55,12 @@ public class TennisGame1 implements TennisGame {
 
     private String getWinningScore() {
         int scoreDifference = player1Score - player2Score;
+        String leadingPlayer, winningPlayer;
         if (Math.abs(scoreDifference) == 1) {
-            String leadingPlayer = (scoreDifference == 1) ? player1Name : player2Name;
+            leadingPlayer = (scoreDifference == 1) ? player1Name : player2Name;
             return "Advantage " + leadingPlayer;
         } else {
-            String winningPlayer = (scoreDifference >= 2) ? player1Name : player2Name;
+            winningPlayer = (scoreDifference >= 2) ? player1Name : player2Name;
             return "Win for " + winningPlayer;
         }
     }
