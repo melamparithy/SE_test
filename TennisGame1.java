@@ -1,4 +1,5 @@
-ic class TennisGame1 implements TennisGame {
+
+public class TennisGame1 implements TennisGame {
 
     private static final int MAX_SCORE = 4;
     private static final String[] SCORE_NAMES = {"Love", "Fifteen", "Thirty", "Forty"};
@@ -55,14 +56,22 @@ ic class TennisGame1 implements TennisGame {
 
     private String getWinningScore() {
         int scoreDifference = player1Score - player2Score;
-        String leadingPlayer, winningPlayer;
-        if (Math.abs(scoreDifference) == 1) {
-            leadingPlayer = (scoreDifference == 1) ? player1Name : player2Name;
+        String leadingPlayer = getLeadingPlayer(scoreDifference);
+        String winningPlayer = getWinningPlayer(scoreDifference);
+        
+        if(Math.abs(scoreDifference) == 1){
             return "Advantage " + leadingPlayer;
-        } else {
-            winningPlayer = (scoreDifference >= 2) ? player1Name : player2Name;
+        } else{
             return "Win for " + winningPlayer;
         }
+    }
+
+    private String getLeadingPlayer(int scoreDifference){
+        return (scoreDifference == 1) ? player1Name : player2Name;
+    }
+    
+    private String getWinningPlayer(int scoreDifference){
+        return (scoreDifference >= 2) ? player1Name : player2Name;
     }
 
     private String getRegularScore() {
