@@ -16,65 +16,32 @@ public class TennisGame1 implements TennisGame {
 
     @Override
     public void wonPoint(String playerName) {
-        if (isPlayer1(playerName)) {
+        if (player1Name.equals(playerName)) {
             player1Score++;
         } else {
             player2Score++;
         }
     }
 
-    private boolean isPlayer1(String playerName) {
-        return playerName.equals(player1Name);
-    }
-
     @Override
     public String getScore() {
-        if (isEqualScore()) {
-            return getEqualScore();
-        } else if (isGameFinished()) {
-            return getWinningScore();
+        if (player1Score == player2Score) {
+            if (player1Score < 3) {
+                return SCORE_NAMES[player1Score] + "-All";
+            } else {
+                return "Deuce";
+            }
+        } else if (player1Score >= MAX_SCORE || player2Score >= MAX_SCORE) {
+            int scoreDifference = player1Score - player2Score;
+            String leadingPlayer = (scoreDifference == 1) ? player1Name : player2Name;
+            String winningPlayer = (scoreDifference >= 2) ? player1Name : player2Name;
+            if (Math.abs(scoreDifference) == 1) {
+                return "Advantage " + leadingPlayer;
+            } else {
+                return "Win for " + winningPlayer;
+            }
         } else {
-            return getRegularScore();
+            return SCORE_NAMES[player1Score] + "-" + SCORE_NAMES[player2Score];
         }
-    }
-
-    private boolean isEqualScore() {
-        return player1Score == player2Score;
-    }
-
-    private boolean isGameFinished() {
-        return player1Score >= MAX_SCORE || player2Score >= MAX_SCORE;
-    }
-
-    private String getEqualScore() {
-        if (player1Score < 3) {
-            return SCORE_NAMES[player1Score] + "-All";
-        } else {
-            return "Deuce";
-        }
-    }
-
-    private String getWinningScore() {
-        int scoreDifference = player1Score - player2Score;
-        String leadingPlayer = getLeadingPlayer(scoreDifference);
-        String winningPlayer = getWinningPlayer(scoreDifference);
-        
-        if(Math.abs(scoreDifference) == 1){
-            return "Advantage " + leadingPlayer;
-        } else{
-            return "Win for " + winningPlayer;
-        }
-    }
-
-    private String getLeadingPlayer(int scoreDifference){
-        return (scoreDifference == 1) ? player1Name : player2Name;
-    }
-    
-    private String getWinningPlayer(int scoreDifference){
-        return (scoreDifference >= 2) ? player1Name : player2Name;
-    }
-
-    private String getRegularScore() {
-        return SCORE_NAMES[player1Score] + "-" + SCORE_NAMES[player2Score];
     }
 }
